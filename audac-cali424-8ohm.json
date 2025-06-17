@@ -1,0 +1,23 @@
+{
+  "id": "audac-cali424-8ohm",
+  "brand": "AUDAC",
+  "model": "CALI424",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 30,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 84,
+  "max_spl_db": 101,
+  "dispersion_deg": {
+    "horizontal": 155,
+    "vertical": 155
+  },
+  "driver_configuration": "1\u00d7 4\" woofer",
+  "dimensions_mm": {
+    "width": 192,
+    "height": 192,
+    "depth": 110
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 24
+}

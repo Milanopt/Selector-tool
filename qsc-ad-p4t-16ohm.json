@@ -1,0 +1,23 @@
+{
+  "id": "qsc-ad-p4t-16ohm",
+  "brand": "QSC",
+  "model": "AD-P4T",
+  "mount_type": "pendant",
+  "rms_power_w": 30,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 88,
+  "max_spl_db": 102,
+  "dispersion_deg": {
+    "horizontal": 150,
+    "vertical": 150
+  },
+  "driver_configuration": "1\u00d7 4.5\" woofer",
+  "dimensions_mm": {
+    "width": 237,
+    "height": 237,
+    "depth": 272
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 30
+}

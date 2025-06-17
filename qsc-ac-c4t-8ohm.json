@@ -1,0 +1,23 @@
+{
+  "id": "qsc-ac-c4t-8ohm",
+  "brand": "QSC",
+  "model": "AC-C4T",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 16,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 101,
+  "dispersion_deg": {
+    "horizontal": 140,
+    "vertical": 140
+  },
+  "driver_configuration": "1\u00d7 4\" woofer",
+  "dimensions_mm": {
+    "width": 214,
+    "height": 214,
+    "depth": 201
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 16
+}

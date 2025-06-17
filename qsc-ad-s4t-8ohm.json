@@ -1,0 +1,23 @@
+{
+  "id": "qsc-ad-s4t-8ohm",
+  "brand": "QSC",
+  "model": "AD-S4T",
+  "mount_type": "surface mount",
+  "rms_power_w": 50,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 104,
+  "dispersion_deg": {
+    "horizontal": 120,
+    "vertical": 120
+  },
+  "driver_configuration": "1\u00d7 4\" woofer",
+  "dimensions_mm": {
+    "width": 261,
+    "height": 161,
+    "depth": 163
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 30
+}
