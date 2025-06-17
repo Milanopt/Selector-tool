@@ -20,5 +20,8 @@
   "weatherproof": false,
   "has_100v_taps": true,
   "max_tap_w_100v": 50,
-  "notes": ""
+  "notes": "",
+  "cutout_dimensions_mm": {
+    "diameter": 185
+  }
 }
