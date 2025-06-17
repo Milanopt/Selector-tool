@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Speaker Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:system-ui,sans-serif;padding:1rem;background:#f9fafb;color:#111;line-height:1.4}
+    h1{font-size:1.8rem;margin-bottom:1rem}
+    .filters{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;align-items:center}
+    label{font-size:.85rem;font-weight:600;margin-right:.25rem}
+    select,input[type="number"],input[type="text"]{padding:.25rem .5rem;font-size:.85rem}
+    button{padding:.3rem .75rem;font-size:.85rem;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer}
+    button:hover{background:#f3f4f6}
+    table{border-collapse:collapse;width:100%;background:#fff}
+    th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;font-size:.85rem}
+    th{background:#f1f5f9;cursor:pointer;user-select:none}
+    th.sort-asc::after{content:" ▲"}
+    th.sort-desc::after{content:" ▼"}
+    tbody tr:nth-child(odd){background:#f9fafb}
+    td.note-cell{background:#fff8dc}
+    .status{font-size:.8rem;color:#444;margin-left:.5rem}
+  </style>
+</head>
+<body>
+  <h1>Speaker Selector</h1>
+
+  <div class="filters">
+    <div>
+      <label for="mountFilter">Mount&nbsp;type:</label>
+      <select id="mountFilter">
+        <option value="">Any</option>
+        <option value="surface mount">Surface</option>
+        <option value="ceiling mount">Ceiling</option>
+        <option value="pendant">Pendant</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="powerMin">Min&nbsp;RMS&nbsp;W:</label>
+      <input type="number" id="powerMin" min="0" placeholder="0" style="width:5rem">
+    </div>
+
+    <div>
+      <label for="impedanceFilter">Impedance:</label>
+      <select id="impedanceFilter">
+        <option value="">Any</option>
+        <option value="4">4 Ω</option>
+        <option value="6">6 Ω</option>
+        <option value="8">8 Ω</option>
+        <option value="16">16 Ω</option>
+      </select>
+    </div>
+
+    <div>
+      <label><input type="checkbox" id="weatherFilter"> Weatherproof</label>
+    </div>
+
+    <div>
+      <label><input type="checkbox" id="lineFilter"> 100&nbsp;V&nbsp;capable</label>
+    </div>
+
+    <div>
+      <label for="searchBox">Search:</label>
+      <input type="text" id="searchBox" placeholder="brand or model">
+    </div>
+
+    <div style="margin-left:auto;display:flex;gap:.5rem">
+      <button id="downloadJSON">Download&nbsp;JSON</button>
+      <button id="saveGitHub">Save&nbsp;to&nbsp;GitHub</button>
+      <span id="status" class="status"></span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="headerRow">
+        <th data-key="brand">Brand</th>
+        <th data-key="model">Model</th>
+        <th data-key="mount_type">Mount</th>
+        <th data-key="rms_power_w" data-numeric="1">RMS&nbsp;W</th>
+        <th data-key="impedance_ohm" data-numeric="1">Ω</th>
+        <th data-key="sensitivity_db_1w1m" data-numeric="1">Sens&nbsp;dB</th>
+        <th data-key="max_spl_db" data-numeric="1">Max&nbsp;SPL</th>
+        <th data-key="dispersion_deg" data-numeric="0">Disp&nbsp;H°/V°</th>
+        <th data-key="driver_configuration">Driver</th>
+        <th data-key="dimensions_mm" data-numeric="0">Dims&nbsp;mm</th>
+        <th data-key="weatherproof">Weather</th>
+        <th data-key="max_tap_w_100v" data-numeric="1">100&nbsp;V&nbsp;max</th>
+        <th data-key="notes">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="productBody">
+      <tr><td colspan="13" style="text-align:center">Loading…</td></tr>
+    </tbody>
+  </table>
+
+<script>
+/* -------------------- CONFIG -------------------- */
+const CONFIG = {
+  owner: "REPLACE_WITH_GH_USERNAME",   // ← edit once
+  repo:  "REPLACE_WITH_REPO",         // ← edit once
+  path:  "",                          // folder containing JSON files ("" if root)
+  branch: "main",                      // branch to read/write
+  bundleFile: "speakers.json"          // aggregated file name (will be created if absent)
+};
+/* ------------------------------------------------ */
+
+let products=[];
+let currentSortKey=null;
+let sortAsc=true;
+
+/* ---------- GitHub helper (token & API) ---------- */
+function getPAT(){ return sessionStorage.getItem('gh_pat')||''; }
+function setPAT(tok){ sessionStorage.setItem('gh_pat',tok); }
+async function ghRequest(url,method="GET",body){
+  const opts={method,headers:{'Accept':'application/vnd.github+json'}};
+  if(getPAT()) opts.headers.Authorization=`Bearer ${getPAT()}`;
+  if(body){ opts.headers['Content-Type']='application/json'; opts.body=JSON.stringify(body); }
+  const res=await fetch(url,opts);
+  if(!res.ok) throw new Error(res.status+" "+res.statusText);
+  return res.json();
+}
+
+/* -------------- Data loading -------------------- */
+async function loadProducts(){
+  const status=document.getElementById('status');
+  status.textContent='Loading…';
+  let urls=[];
+  try{
+    // try bundle file first
+    const bundleRaw=`https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/${CONFIG.path?CONFIG.path+'/':''}${CONFIG.bundleFile}`;
+    const bundleRes=await fetch(bundleRaw);
+    if(bundleRes.ok){ const arr=await bundleRes.json(); products=arr; urls=[]; }
+    else throw new Error('bundle not found');
+  }catch(e){
+    // fall back to listing individual JSONs via GitHub API
+    try{
+      const list=await ghRequest(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}?ref=${CONFIG.branch}`);
+      urls=list.filter(i=>i.name.endsWith('.json')).map(i=>i.download_url);
+    }catch(err){ console.warn('GitHub list failed',err); }
+  }
+  if(urls.length){
+    const fetches=urls.map(u=>fetch(u).then(r=>r.json()).then(d=>{ if(!d.notes) d.notes=""; products.push(d); }));
+    await Promise.all(fetches);
+  }
+  status.textContent='';
+  applyFilters();
+}
+
+/* -------------- Filter & sort ------------------- */
+function applyFilters(){
+  const mount=document.getElementById('mountFilter').value;
+  const powerMin=parseFloat(document.getElementById('powerMin').value)||0;
+  const imp=document.getElementById('impedanceFilter').value;
+  const weather=document.getElementById('weatherFilter').checked;
+  const line=document.getElementById('lineFilter').checked;
+  const term=document.getElementById('searchBox').value.toLowerCase();
+
+  let filtered=products.filter(p=>{
+    return (!mount||p.mount_type===mount)&&
+           (p.rms_power_w>=powerMin)&&
+           (!imp||String(p.impedance_ohm)===imp)&&
+           (!weather||p.weatherproof)&&
+           (!line||p.has_100v_taps)&&
+           (!term||(p.brand+" "+p.model).toLowerCase().includes(term));
+  });
+
+  if(currentSortKey) filtered.sort((a,b)=>compareValues(a,b,currentSortKey,sortAsc));
+  renderTable(filtered);
+}
+
+function compareValues(a,b,key,asc){
+  const vA=getValue(a,key); const vB=getValue(b,key);
+  if(vA===vB) return 0;
+  if(vA===undefined) return asc?1:-1;
+  if(vB===undefined) return asc?-1:1;
+  return asc? (vA>vB?1:-1) : (vA>vB?-1:1);
+}
+function getValue(o,k){
+  if(k==='dispersion_deg') return o.dispersion_deg.horizontal;
+  if(k==='dimensions_mm')  return o.dimensions_mm.width;
+  if(k==='weatherproof')   return o.weatherproof?1:0;
+  return o[k];
+}
+
+/* --------------- Rendering ---------------------- */
+function renderTable(list){
+  const tbody=document.getElementById('productBody'); tbody.innerHTML='';
+  if(list.length===0){tbody.innerHTML='<tr><td colspan="13" style="text-align:center">No matches</td></tr>';return;}
+  list.forEach((p,idx)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${p.brand}</td><td>${p.model}</td><td>${p.mount_type}</td><td>${p.rms_power_w}</td><td>${p.impedance_ohm}</td><td>${p.sensitivity_db_1w1m}</td><td>${p.max_spl_db}</td><td>${p.dispersion_deg.horizontal}/${p.dispersion_deg.vertical}</td><td>${p.driver_configuration}</td><td>${p.dimensions_mm.width}×${p.dimensions_mm.height}×${p.dimensions_mm.depth}</td><td>${p.weatherproof?'Yes':'No'}</td><td>${p.has_100v_taps?p.max_tap_w_100v+' W':'–'}</td><td class="note-cell" contenteditable="true" data-idx="${idx}">${p.notes||''}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ------------- Event bindings ------------------- */
+['mountFilter','powerMin','impedanceFilter','weatherFilter','lineFilter','searchBox']
+  .forEach(id=>document.getElementById(id).addEventListener('input',applyFilters));
+
+document.getElementById('headerRow').addEventListener('click',e=>{
+  const th=e.target.closest('th'); if(!th) return;
+  const key=th.dataset.key; if(!key) return;
+  if(currentSortKey===key) sortAsc=!sortAsc; else {currentSortKey=key; sortAsc=true;}
+  document.querySelectorAll('th').forEach(h=>h.classList.remove('sort-asc','sort-desc'));
+  th.classList.add(sortAsc?'sort-asc':'sort-desc');
+  applyFilters();
+});
+
+document.getElementById('productBody').addEventListener('blur',e=>{
+  if(e.target.matches('.note-cell')){
+    const idx=e.target.dataset.idx; products[idx].notes=e.target.textContent.trim();
+  }
+},true);
+
+document.getElementById('downloadJSON').addEventListener('click',()=>{
+  const dataStr="data:application/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(products,null,2));
+  const a=document.createElement('a'); a.href=dataStr; a.download='speakers_updated.json'; a.click();
+});
+
+document.getElementById('saveGitHub').addEventListener('click',saveToGitHub);
+
+async function saveToGitHub(){
+  const status=document.getElementById('status');
+  let token=getPAT();
+  if(!token){ token=prompt('Enter a GitHub PAT with repo > contents:write scope'); if(!token) return; setPAT(token); }
+  status.textContent='Saving…';
+  try{
+    // 1) get current file sha if exists
+    const apiPath=`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path?CONFIG.path+'/':''}${CONFIG.bundleFile}`;
+    let sha; try{ const meta=await ghRequest(apiPath+`?ref=${CONFIG.branch}`); sha=meta.sha; }catch(e){ sha=undefined; }
+    // 2) prepare content
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(products,null,2))));
+    const body={message:'Update speaker notes via selector',branch:CONFIG.branch,content};
+    if(sha) body.sha=sha;
+    await ghRequest(apiPath,'PUT',body);
+    status.textContent='✔ Saved to GitHub'; setTimeout(()=>status.textContent='',4000);
+  }catch(err){ console.error(err); status.textContent='✖ Save failed'; }
+}
+
+document.addEventListener('DOMContentLoaded',loadProducts);
+</script>
+</body>
+</html>
