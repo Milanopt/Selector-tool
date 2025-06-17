@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Product Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:system-ui,sans-serif;padding:1rem;background:#f9fafb;color:#111;line-height:1.4}
+    h1{font-size:1.8rem;margin-bottom:1rem}
+    .tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+    .tab-button{padding:.5rem 1rem;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:.9rem}
+    .tab-button.active{background:#f1f5f9;font-weight:600}
+    .filters{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;align-items:center}
+    label{font-size:.85rem;font-weight:600;margin-right:.25rem}
+    select,input[type="number"],input[type="text"]{padding:.25rem .5rem;font-size:.85rem}
+    table{border-collapse:collapse;width:100%;background:#fff}
+    th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;font-size:.85rem}
+    th{background:#f1f5f9;cursor:pointer;user-select:none}
+    th.sort-asc::after{content:" ▲"}
+    th.sort-desc::after{content:" ▼"}
+    tbody tr:nth-child(odd){background:#f9fafb}
+    td.edit-cell{background:#fff8dc}
+    button{padding:.4rem .8rem;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:.85rem}
+    .btn-bar{margin:.5rem 0;display:flex;gap:.5rem}
+    a.link{color:#0d6efd;text-decoration:underline}
+  </style>
+</head>
+<body>
+
+<!-- ========= TAB BAR ========= -->
+<div class="tabs">
+  <button class="tab-button active" data-tab="speakers">Speakers</button>
+  <button class="tab-button" data-tab="amplifiers">Amplifiers</button>
+</div>
+
+<!-- ========= SPEAKERS SECTION ========= -->
+<div id="speakersSection">
+  <h1>Speaker Selector</h1>
+
+  <div class="filters">
+    <div><label for="mountFilter">Mount:</label>
+      <select id="mountFilter"><option value="">Any</option><option>surface mount</option><option>ceiling mount</option><option>pendant</option></select>
+    </div>
+    <div><label for="powerMin">Min RMS W:</label>
+      <input id="powerMin" type="number" min="0" placeholder="0" style="width:5rem">
+    </div>
+    <div><label for="impedanceFilter">Impedance:</label>
+      <select id="impedanceFilter"><option value="">Any</option><option>4</option><option>6</option><option>8</option><option>16</option></select>
+    </div>
+    <div><label><input id="weatherFilter" type="checkbox"> Weatherproof</label></div>
+    <div><label><input id="lineFilter" type="checkbox"> 100 V capable</label></div>
+    <div><label for="searchBox">Search:</label>
+      <input id="searchBox" type="text" placeholder="brand or model"></div>
+  </div>
+
+  <div class="btn-bar">
+    <button id="downloadBtnSpk">Download JSON</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="headerRowSpk">
+        <th data-key="brand">Brand</th>
+        <th data-key="model">Model</th>
+        <th data-key="mount_type">Mount</th>
+        <th data-key="rms_power_w" data-num>RMS W</th>
+        <th data-key="impedance_ohm" data-num>Ω</th>
+        <th data-key="sensitivity_db_1w1m" data-num>Sens dB</th>
+        <th data-key="max_spl_db" data-num>Max SPL</th>
+        <th data-key="dispersion_deg">Disp H°/V°</th>
+        <th data-key="driver_configuration">Driver</th>
+        <th data-key="dimensions_mm">Dims mm</th>
+        <th data-key="cutout_dimensions_mm" data-num>Cut‑out Ø mm</th>
+        <th data-key="weatherproof">Weather</th>
+        <th data-key="max_tap_w_100v" data-num>100 V max</th>
+        <th data-key="price_eur" data-num>Price €</th>
+        <th data-key="buy_link">Link</th>
+      </tr>
+    </thead>
+    <tbody id="speakerBody"><tr><td colspan="15" style="text-align:center">Loading…</td></tr></tbody>
+  </table>
+</div>
+
+<!-- ========= AMPLIFIERS SECTION ========= -->
+<div id="amplifiersSection" style="display:none">
+  <h1>Amplifier Selector</h1>
+
+  <div class="filters">
+    <div><label for="ampSearch">Search:</label>
+      <input id="ampSearch" type="text" placeholder="brand or model">
+    </div>
+    <div><label for="ampExactCh">Channels:</label>
+      <input id="ampExactCh" type="number" min="1" placeholder="1" style="width:4rem">
+    </div>
+    <div><label for="ampMin100V">Min W @100V:</label>
+      <input id="ampMin100V" type="number" min="0" placeholder="0" style="width:5rem">
+    </div>
+    <div><label for="ampMinLow">Min W @4/8Ω:</label>
+      <input id="ampMinLow" type="number" min="0" placeholder="0" style="width:5rem">
+    </div>
+    <div><label for="ampBridgable">Bridgable:</label>
+      <select id="ampBridgable"><option value="">Any</option><option value="Yes">Yes</option><option value="No">No</option></select>
+    </div>
+  </div>
+
+  <div class="btn-bar">
+    <button id="downloadBtnAmp">Download JSON</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="headerRowAmp">
+        <th data-key="Brand">Brand</th>
+        <th data-key="Model">Model</th>
+        <th data-key="Type">Type</th>
+        <th data-key="Number of Channels" data-num>Channels</th>
+        <th data-key="Power output per Channel in 100V">Power @100V</th>
+        <th data-key="Power output per Channel in 8 Ohm or 4 Ohm">Power @8Ω/4Ω</th>
+        <th data-key="Bridgable">Bridgable</th>
+        <th data-key="SNR">SNR</th>
+        <th data-key="Power consumption">Consumption</th>
+        <th data-key="Height (Units)">Height (U)</th>
+      </tr>
+    </thead>
+    <tbody id="ampBody"><tr><td colspan="10" style="text-align:center">Loading…</td></tr></tbody>
+  </table>
+</div>
+
+<script>
+/* ===== helper ===== */
+const BRANCH="main";
+function detectRepo(){if(!location.hostname.endsWith("github.io"))return null;
+  const owner=location.hostname.split(".")[0];const parts=location.pathname.split("/").filter(Boolean);
+  return parts.length?{owner,repo:parts[0],path:parts.slice(1,-1).join("/")}:null;}
+async function fetchJSON(u){const r=await fetch(u);if(!r.ok)throw new Error(r.statusText);return r.json();}
+
+/* ===== tabs ===== */
+function switchTab(tab){document.querySelectorAll(".tab-button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  speakersSection.style.display=tab==="speakers"?"block":"none";
+  amplifiersSection.style.display=tab==="amplifiers"?"block":"none";}
+document.querySelectorAll(".tab-button").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+
+/* ========= SPEAKERS (existing) ========= */
+const SPK_FALLBACK=["audac-ateo4mk2-8ohm.json","audac-ateo4d-16ohm.json","audac-cira724-8ohm.json","biamp-c-ic6-8ohm.json","bose-dm5c-8ohm.json","bose-dm5se-8ohm.json","bose-dm6c-8ohm.json","bose-dm6se-8ohm.json","bose-dm8s-8ohm.json","bose-dm10s-sub-8ohm.json"];
+const SPK_BUNDLE="speakers.json";
+let speakers=[],spkSortKey=null,spkAsc=true;
+function normSpk(o){if(o.price_eur===undefined)o.price_eur="";if(o.buy_link===undefined)o.buy_link="";return o;}
+function initSpeakers(){attachSpkSort();attachSpkFilters();applySpkFilters();}
+function attachSpkFilters(){["mountFilter","powerMin","impedanceFilter","weatherFilter","lineFilter","searchBox"].forEach(id=>document.getElementById(id).addEventListener("input",applySpkFilters));}
+function attachSpkSort(){document.querySelectorAll("#headerRowSpk th").forEach(th=>{th.onclick=()=>{const k=th.dataset.key;spkAsc=spkSortKey===k?!spkAsc:true;spkSortKey=k;document.querySelectorAll("#headerRowSpk th").forEach(h=>h.classList.remove("sort-asc","sort-desc"));th.classList.add(spkAsc?"sort-asc":"sort-desc");applySpkFilters();};});}
+function spkVal(o){switch(spkSortKey){case"dispersion_deg":return o.dispersion_deg.horizontal;case"dimensions_mm":return o.dimensions_mm.width;case"cutout_dimensions_mm":return o.cutout_dimensions_mm?.diameter;case"weatherproof":return o.weatherproof?1:0;case"price_eur":return parseFloat(o.price_eur)||0;default:return o[spkSortKey];}}
+function spkCmp(a,b){const A=spkVal(a),B=spkVal(b);if(A===B)return 0;if(A===undefined)return 1;if(B===undefined)return-1;return(A>B?1:-1)*(spkAsc?1:-1);}
+function renderSpeakers(list){const tb=document.getElementById("speakerBody");tb.innerHTML="";if(!list.length){tb.innerHTML='<tr><td colspan="15" style="text-align:center">No matches</td></tr>';return;}list.forEach(p=>{const tr=document.createElement("tr");tr.innerHTML=`
+<td>${p.brand}</td><td>${p.model}</td><td>${p.mount_type}</td><td>${p.rms_power_w}</td><td>${p.impedance_ohm}</td>
+<td>${p.sensitivity_db_1w1m??"–"}</td><td>${p.max_spl_db??"–"}</td><td>${p.dispersion_deg.horizontal}/${p.dispersion_deg.vertical}</td>
+<td>${p.driver_configuration}</td><td>${p.dimensions_mm.width}×${p.dimensions_mm.height}×${p.dimensions_mm.depth}</td>
+<td>${p.cutout_dimensions_mm?.diameter??"–"}</td><td>${p.weatherproof?"Yes":"No"}</td>
+<td>${p.has_100v_taps?(p.max_tap_w_100v+" W"):"–"}</td>
+<td contenteditable class="edit-cell price">${p.price_eur}</td><td contenteditable class="edit-cell link">${p.buy_link}</td>`;tr.querySelectorAll(".edit-cell").forEach((c,i)=>{c.onblur=()=>{i===13?p.price_eur=c.textContent.trim():p.buy_link=c.textContent.trim();};});tb.appendChild(tr);});}
+function applySpkFilters(){const g=id=>document.getElementById(id);const mount=g("mountFilter").value,pMin=+g("powerMin").value||0,imp=g("impedanceFilter").value;const weather=g("weatherFilter").checked,line=g("lineFilter").checked,term=g("searchBox").value.toLowerCase();let out=speakers.filter(p=>(!mount||p.mount_type===mount)&&(p.rms_power_w>=pMin)&&(!imp||String(p.impedance_ohm)===imp)&&(!weather||p.weatherproof)&&(!line||p.has_100v_taps)&&(!term||(p.brand+" "+p.model).toLowerCase().includes(term)));if(spkSortKey)out.sort(spkCmp);renderSpeakers(out);}
+async function loadSpeakers(){let urls=[],gh=detectRepo();if(gh){const base=`https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${BRANCH}/${gh.path?gh.path+"/":""}`;if(SPK_BUNDLE){try{speakers=(await fetchJSON(base+SPK_BUNDLE)).map(normSpk);return initSpeakers();}catch(e){}}
+try{const api=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.path}?ref=${BRANCH}`,list=await fetchJSON(api);urls=list.filter(f=>f.name.endsWith(".json")&&!f.name.startsWith("amp")).map(f=>f.download_url);}catch(e){console.warn("speaker list fail",e);}}if(!urls.length)urls=SPK_FALLBACK.map(f=>"./"+f);await Promise.all(urls.map(u=>fetchJSON(u).then(d=>speakers.push(normSpk(d))).catch(e=>console.warn(u,e))));initSpeakers();}
+document.getElementById("downloadBtnSpk").onclick=()=>{const blob=new Blob([JSON.stringify(speakers,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="speakers_updated.json";a.click();};
+
+/* ========= AMPLIFIERS ========= */
+const AMP_FALLBACK=["audac-pmq240.json","audac-pmq480.json","biamp-amp450bp.json","biamp-amp450p.json","bose-iza2120hz.json","bose-p2600a.json","crown-xli1500.json"];
+const AMP_BUNDLE="amplifiers.json";
+let amplifiers=[],ampSortKey=null,ampAsc=true;
+function parseMaxW(str){if(!str)return 0;const nums=str.match(/\d+(\.\d+)?/g);if(!nums)return 0;return Math.max(...nums.map(Number));}
+function preprocessAmp(a){a._power100v=parseMaxW(a["Power output per Channel in 100V"]);a._powerLow=parseMaxW(a["Power output per Channel in 8 Ohm or 4 Ohm"]);return a;}
+function initAmplifiers(){attachAmpSort();attachAmpFilters();applyAmpFilters();}
+function attachAmpSort(){document.querySelectorAll("#headerRowAmp th").forEach(th=>{th.onclick=()=>{const k=th.dataset.key;ampAsc=ampSortKey===k?!ampAsc:true;ampSortKey=k;document.querySelectorAll("#headerRowAmp th").forEach(h=>h.classList.remove("sort-asc","sort-desc"));th.classList.add(ampAsc?"sort-asc":"sort-desc");applyAmpFilters();};});}
+function attachAmpFilters(){["ampSearch","ampExactCh","ampMin100V","ampMinLow","ampBridgable"].forEach(id=>document.getElementById(id).addEventListener("input",applyAmpFilters));}
+function ampVal(o){return o[ampSortKey];}
+function ampCmp(a,b){const A=ampVal(a),B=ampVal(b);if(A===B)return 0;if(A===undefined)return 1;if(B===undefined)return-1;return(A>B?1:-1)*(ampAsc?1:-1);}
+function renderAmplifiers(list){const tb=document.getElementById("ampBody");tb.innerHTML="";if(!list.length){tb.innerHTML='<tr><td colspan="10" style="text-align:center">No matches</td></tr>';return;}list.forEach(a=>{const tr=document.createElement("tr");tr.innerHTML=`
+<td>${a["Brand"]}</td><td>${a["Model"]}</td><td>${a["Type"]}</td>
+<td>${a["Number of Channels"]}</td><td>${a["Power output per Channel in 100V"]??"–"}</td>
+<td>${a["Power output per Channel in 8 Ohm or 4 Ohm"]??"–"}</td><td>${a["Bridgable"]}</td><td>${a["SNR"]}</td>
+<td>${a["Power consumption"]??"–"}</td><td>${a["Height (Units)"]}</td>`;tb.appendChild(tr);});}
+function applyAmpFilters(){const g=id=>document.getElementById(id);const term=g("ampSearch").value.toLowerCase(),minCh=+g("ampChannels").value||0,min100=+g("ampMin100V").value||0,minLow=+g("ampMinLow").value||0,bridg=g("ampBridgable").value;
+  let out=amplifiers.filter(a=>(!term||(a["Brand"]+" "+a["Model"]).toLowerCase().includes(term))&&(!chStr || a["Number of Channels"]===exactCh)&&(a._power100v>=min100)&&(a._powerLow>=minLow)&&(!bridg||a["Bridgable"]===bridg));
+  if(ampSortKey)out.sort(ampCmp);renderAmplifiers(out);}
+async function loadAmplifiers(){let urls=[],gh=detectRepo();if(gh){const base=`https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${BRANCH}/${gh.path?gh.path+"/":""}`;if(AMP_BUNDLE){try{amplifiers=(await fetchJSON(base+AMP_BUNDLE)).map(preprocessAmp);return initAmplifiers();}catch(e){}}
+  try{const api=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.path}?ref=${BRANCH}`,list=await fetchJSON(api);urls=list.filter(f=>f.name.endsWith(".json")&&f.name.match(/amp|pmq|iza|xli|p2600/i)).map(f=>f.download_url);}catch(e){console.warn("amp list fail",e);}}
+  if(!urls.length)urls=AMP_FALLBACK.map(f=>"./"+f);await Promise.all(urls.map(u=>fetchJSON(u).then(d=>amplifiers.push(preprocessAmp(d))).catch(e=>console.warn(u,e))));initAmplifiers();}
+document.getElementById("downloadBtnAmp").onclick=()=>{const blob=new Blob([JSON.stringify(amplifiers,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="amplifiers_updated.json";a.click();};
+
+/* kick off */
+document.addEventListener("DOMContentLoaded",()=>{loadSpeakers();loadAmplifiers();});
+</script>
+</body>
+</html>
