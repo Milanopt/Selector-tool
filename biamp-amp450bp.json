@@ -1,0 +1,12 @@
+{
+  "Brand": "Biamp",
+  "Model": "AMP‑450BP",
+  "Type": "PoE+ conferencing amplifier (Class‑D)",
+  "Number of Channels": 4,
+  "Power output per Channel in 100V": null,
+  "Power output per Channel in 8 Ohm or 4 Ohm": "3 W continuous (50 W burst @ 4 Ω / 30 W burst @ 8 Ω)",
+  "Bridgable": "No",
+  "SNR": "> 90 dB",
+  "Power consumption": "30 W (PoE+)",
+  "Height (Units)": "0 U"
+}

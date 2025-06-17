@@ -1,0 +1,12 @@
+{
+  "Brand": "AUDAC",
+  "Model": "PMQ480",
+  "Type": "Quad‑channel 100 V power amplifier (Class‑D)",
+  "Number of Channels": 4,
+  "Power output per Channel in 100V": "480 W",
+  "Power output per Channel in 8 Ohm or 4 Ohm": "480 W @ 8 Ω",
+  "Bridgable": "No",
+  "SNR": "> 95 dB",
+  "Power consumption": null,
+  "Height (Units)": "2 U"
+}

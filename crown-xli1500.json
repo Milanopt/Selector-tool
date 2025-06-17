@@ -1,0 +1,12 @@
+{
+  "Brand": "Crown",
+  "Model": "XLi 1500",
+  "Type": "Stereo power amplifier",
+  "Number of Channels": 2,
+  "Power output per Channel in 100V": null,
+  "Power output per Channel in 8 Ohm or 4 Ohm": "330 W @ 8 Ω / 450 W @ 4 Ω",
+  "Bridgable": "Yes (900 W @ 8 Ω)",
+  "SNR": "> 100 dB",
+  "Power consumption": null,
+  "Height (Units)": "2 U"
+}
