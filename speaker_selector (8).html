@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Speaker Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:system-ui, sans-serif;padding:1rem;background:#f9fafb;color:#111;line-height:1.4}
+    h1{font-size:1.8rem;margin-bottom:1rem}
+    .filters{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;align-items:center}
+    label{font-size:.85rem;font-weight:600;margin-right:.25rem}
+    select,input[type="number"],input[type="text"]{padding:.25rem .5rem;font-size:.85rem}
+    button{padding:.3rem .75rem;font-size:.85rem;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer}
+    button:hover{background:#f3f4f6}
+    table{border-collapse:collapse;width:100%;background:#fff}
+    th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;font-size:.85rem}
+    th{background:#f1f5f9;cursor:pointer;user-select:none}
+    th.sort-asc::after{content:" ▲"}
+    th.sort-desc::after{content:" ▼"}
+    tbody tr:nth-child(odd){background:#f9fafb}
+    td.note-cell{background:#fff8dc}
+  </style>
+</head>
+<body>
+  <h1>Speaker Selector</h1>
+
+  <div class="filters">
+    <div>
+      <label for="mountFilter">Mount&nbsp;type:</label>
+      <select id="mountFilter">
+        <option value="">Any</option>
+        <option value="surface mount">Surface</option>
+        <option value="ceiling mount">Ceiling</option>
+        <option value="pendant">Pendant</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="powerMin">Min&nbsp;RMS&nbsp;W:</label>
+      <input type="number" id="powerMin" min="0" placeholder="0" style="width:5rem">
+    </div>
+
+    <div>
+      <label for="impedanceFilter">Impedance:</label>
+      <select id="impedanceFilter">
+        <option value="">Any</option>
+        <option value="4">4 Ω</option>
+        <option value="6">6 Ω</option>
+        <option value="8">8 Ω</option>
+        <option value="16">16 Ω</option>
+      </select>
+    </div>
+
+    <div>
+      <label><input type="checkbox" id="weatherFilter"> Weatherproof</label>
+    </div>
+
+    <div>
+      <label><input type="checkbox" id="lineFilter"> 100&nbsp;V&nbsp;capable</label>
+    </div>
+
+    <div>
+      <label for="searchBox">Search:</label>
+      <input type="text" id="searchBox" placeholder="brand or model">
+    </div>
+
+    <div style="margin-left:auto">
+      <button id="downloadJSON">Download&nbsp;JSON</button>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="headerRow">
+        <th data-key="brand">Brand</th>
+        <th data-key="model">Model</th>
+        <th data-key="mount_type">Mount</th>
+        <th data-key="rms_power_w" data-numeric="1">RMS&nbsp;W</th>
+        <th data-key="impedance_ohm" data-numeric="1">Ω</th>
+        <th data-key="sensitivity_db_1w1m" data-numeric="1">Sens&nbsp;dB</th>
+        <th data-key="max_spl_db" data-numeric="1">Max&nbsp;SPL</th>
+        <th data-key="dispersion_deg" data-numeric="0">Disp&nbsp;H°/V°</th>
+        <th data-key="driver_configuration">Driver</th>
+        <th data-key="dimensions_mm" data-numeric="0">Dims&nbsp;mm</th>
+        <th data-key="weatherproof">Weather</th>
+        <th data-key="max_tap_w_100v" data-numeric="1">100&nbsp;V&nbsp;max</th>
+        <th data-key="notes">Notes</th>
+      </tr>
+    </thead>
+    <tbody id="productBody">
+      <tr><td colspan="13" style="text-align:center">Loading…</td></tr>
+    </tbody>
+  </table>
+
+<script>
+// Utility to guess owner/repo/path when served from GitHub Pages
+function guessGitHubRepo(){
+  const host = location.hostname;
+  if(!host.endsWith("github.io")) return null;
+  const owner = host.split(".")[0];
+  const parts = location.pathname.split("/").filter(Boolean);
+  if(parts.length===0) return null;
+  const repo = parts[0];
+  const path = parts.slice(1,-1).join("/"); // assume HTML file at the end
+  return {owner, repo, path};
+}
+
+const BRANCH = "main"; // change if using another default branch
+const FALLBACK_FILES = ["audac-ateo6m-8ohm.json","audac-ateo6dm-16ohm.json","audac-vexo8-8ohm.json","audac-vexo110-8ohm.json","audac-vexo108-8ohm.json","audac-vexo106-8ohm.json","audac-cali424-8ohm.json","qsc-ac-c4t-8ohm.json","qsc-ad-c4t-16ohm.json","qsc-ad-p4t-16ohm.json","qsc-ad-s4t-8ohm.json"];
+
+let products=[];
+let currentSortKey=null;
+let sortAsc=true;
+
+async function loadProducts(){
+  const gh = guessGitHubRepo();
+  let urls=[];
+  if(gh){
+    const apiUrl = `https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.path}?ref=${BRANCH}`;
+    try{
+      const list = await (await fetch(apiUrl)).json();
+      urls = list.filter(item=>item.name.endsWith('.json')).map(item=>item.download_url);
+    }catch(err){console.warn('GitHub API failed, falling back',err);}  }
+  if(urls.length===0){ urls = FALLBACK_FILES; }
+
+  const fetches = urls.map(u=>fetch(u).then(j=>j.json()).then(d=>{ if(!d.notes) d.notes=""; products.push(d); }));
+  await Promise.all(fetches);
+  applyFilters();
+}
+
+function applyFilters(){
+  const mount=document.getElementById('mountFilter').value;
+  const powerMin=parseFloat(document.getElementById('powerMin').value)||0;
+  const imp=document.getElementById('impedanceFilter').value;
+  const weather=document.getElementById('weatherFilter').checked;
+  const line=document.getElementById('lineFilter').checked;
+  const term=document.getElementById('searchBox').value.toLowerCase();
+
+  let filtered=products.filter(p=>{
+    return (!mount||p.mount_type===mount)&&
+           (p.rms_power_w>=powerMin)&&
+           (!imp||String(p.impedance_ohm)===imp)&&
+           (!weather||p.weatherproof)&&
+           (!line||p.has_100v_taps)&&
+           (!term||(p.brand+" "+p.model).toLowerCase().includes(term));
+  });
+
+  if(currentSortKey){ filtered.sort((a,b)=>compareValues(a,b,currentSortKey,sortAsc)); }
+
+  renderTable(filtered);
+}
+
+function compareValues(a,b,key,asc){
+  const valA=getValue(a,key);
+  const valB=getValue(b,key);
+  if(valA===valB) return 0;
+  if(valA>valB||valA===undefined) return asc?1:-1;
+  if(valA<valB||valB===undefined) return asc?-1:1;
+}
+function getValue(obj,key){
+  switch(key){
+    case 'dispersion_deg': return obj.dispersion_deg.horizontal;
+    case 'dimensions_mm': return obj.dimensions_mm.width;
+    case 'weatherproof': return obj.weatherproof?1:0;
+    default: return obj[key];
+  }
+}
+
+function renderTable(list){
+  const tbody=document.getElementById('productBody');
+  tbody.innerHTML='';
+  if(list.length===0){ tbody.innerHTML=`<tr><td colspan="13" style="text-align:center">No matches</td></tr>`;return; }
+  list.forEach(p=>{
+    const row=document.createElement('tr');
+    row.innerHTML=`
+      <td>${p.brand}</td>
+      <td>${p.model}</td>
+      <td>${p.mount_type}</td>
+      <td>${p.rms_power_w}</td>
+      <td>${p.impedance_ohm}</td>
+      <td>${p.sensitivity_db_1w1m}</
