@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Speaker Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:system-ui,sans-serif;padding:1rem;background:#f9fafb;color:#111;line-height:1.4}
+    h1{font-size:1.8rem;margin-bottom:1rem}
+    .filters{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;align-items:center}
+    label{font-size:.85rem;font-weight:600;margin-right:.25rem}
+    select,input[type="number"],input[type="text"]{padding:.25rem .5rem;font-size:.85rem}
+    table{border-collapse:collapse;width:100%;background:#fff}
+    th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;font-size:.85rem}
+    th{background:#f1f5f9;cursor:pointer;user-select:none}
+    th.sort-asc::after{content:" ▲"}
+    th.sort-desc::after{content:" ▼"}
+    tbody tr:nth-child(odd){background:#f9fafb}
+    td.edit-cell{background:#fff8dc}
+    button{padding:.4rem .8rem;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:.85rem}
+    .btn-bar{margin:.5rem 0;display:flex;gap:.5rem}
+    a.link{color:#0d6efd;text-decoration:underline}
+  </style>
+</head>
+<body>
+  <h1>Speaker Selector</h1>
+
+  <div class="filters">
+    <div><label for="mountFilter">Mount:</label>
+      <select id="mountFilter"><option value="">Any</option><option>surface mount</option><option>ceiling mount</option><option>pendant</option></select>
+    </div>
+    <div><label for="powerMin">Min RMS W:</label>
+      <input id="powerMin" type="number" min="0" placeholder="0" style="width:5rem">
+    </div>
+    <div><label for="impedanceFilter">Impedance:</label>
+      <select id="impedanceFilter"><option value="">Any</option><option>4</option><option>6</option><option>8</option><option>16</option></select>
+    </div>
+    <div><label><input id="weatherFilter" type="checkbox"> Weatherproof</label></div>
+    <div><label><input id="lineFilter" type="checkbox"> 100 V capable</label></div>
+    <div><label for="searchBox">Search:</label>
+      <input id="searchBox" type="text" placeholder="brand or model"></div>
+  </div>
+
+  <div class="btn-bar">
+    <button id="downloadBtn">Download JSON</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="headerRow">
+        <th data-key="brand">Brand</th>
+        <th data-key="model">Model</th>
+        <th data-key="mount_type">Mount</th>
+        <th data-key="rms_power_w" data-num>RMS W</th>
+        <th data-key="impedance_ohm" data-num>Ω</th>
+        <th data-key="sensitivity_db_1w1m" data-num>Sens dB</th>
+        <th data-key="max_spl_db" data-num>Max SPL</th>
+        <th data-key="dispersion_deg">Disp H°/V°</th>
+        <th data-key="driver_configuration">Driver</th>
+        <th data-key="dimensions_mm">Dims mm</th>
+        <th data-key="cutout_dimensions_mm" data-num>Cut‑out Ø mm</th>
+        <th data-key="weatherproof">Weather</th>
+        <th data-key="max_tap_w_100v" data-num>100 V max</th>
+        <th data-key="price_eur" data-num>Price €</th>
+        <th data-key="buy_link">Link</th>
+      </tr>
+    </thead>
+    <tbody id="productBody"><tr><td colspan="15" style="text-align:center">Loading…</td></tr></tbody>
+  </table>
+
+<script>
+// ---------------- CONFIG ----------------
+const BRANCH="main";
+const FALLBACK=[
+ "audac-ateo4mk2-8ohm.json","audac-ateo4d-16ohm.json","audac-cira724-8ohm.json",
+ "biamp-c-ic6-8ohm.json","bose-dm5c-8ohm.json","bose-dm5se-8ohm.json",
+ "bose-dm6c-8ohm.json","bose-dm6se-8ohm.json","bose-dm8s-8ohm.json",
+ "bose-dm10s-sub-8ohm.json"
+];
+const BUNDLE="speakers.json"; // set "" to disable bundle fetch
+//----------------------------------------
+let products=[];let sortKey=null;let sortAsc=true;
+
+document.addEventListener('DOMContentLoaded',loadProducts);
+
+function detectRepo(){
+  if(!location.hostname.endsWith('github.io')) return null;
+  const owner=location.hostname.split('.')[0];
+  const parts=location.pathname.split('/').filter(Boolean);
+  if(!parts.length) return null;
+  const repo=parts[0];
+  const path=parts.slice(1,-1).join('/');
+  return {owner,repo,path};
+}
+async function fetchJSON(u){const r=await fetch(u);if(!r.ok)throw new Error(r.statusText);return r.json();}
+async function loadProducts(){
+  let urls=[];const gh=detectRepo();
+  if(gh){const base=`https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${BRANCH}/${gh.path?gh.path+'/':''}`;
+    if(BUNDLE){try{products=(await fetchJSON(base+BUNDLE)).map(norm);return init();}catch(e){}
+    }
+    try{
+      const api=`https://api.github.com/repos/${gh.owner}/${gh.repo}/contents/${gh.path}?ref=${BRANCH}`;
+      const list=await fetchJSON(api);
+      urls=list.filter(f=>f.name.endsWith('.json')).map(f=>f.download_url);
+    }catch(e){console.warn('list fail',e);}
+  }
+  if(!urls.length) urls=FALLBACK.map(f=>`./${f}`);
+  await Promise.all(urls.map(u=>fetchJSON(u).then(d=>products.push(norm(d))).catch(e=>console.warn(u,e))));
+  init();
+}
+function norm(o){if(o.price_eur===undefined)o.price_eur="";if(o.buy_link===undefined)o.buy_link="";return o;}
+function init(){attachSort();attachFilters();applyFilters();}
+function attachFilters(){['mountFilter','powerMin','impedanceFilter','weatherFilter','lineFilter','searchBox']
+ .forEach(id=>document.getElementById(id).addEventListener('input',applyFilters));}
+function attachSort(){document.querySelectorAll('#headerRow th').forEach(th=>{
+  th.onclick=()=>{const k=th.dataset.key;sortAsc=sortKey===k?!sortAsc:true;sortKey=k;
+    document.querySelectorAll('#headerRow th').forEach(h=>h.classList.remove('sort-asc','sort-desc'));
+    th.classList.add(sortAsc?'sort-asc':'sort-desc');
+    applyFilters();};});}
+function applyFilters(){
+  const g=id=>document.getElementById(id);
+  const mount=g('mountFilter').value;pMin=+g('powerMin').value||0;imp=g('impedanceFilter').value;
+  const weather=g('weatherFilter').checked,line=g('lineFilter').checked,term=g('searchBox').value.toLowerCase();
+  let out=products.filter(p=>(!mount||p.mount_type===mount)&&(p.rms_power_w>=pMin)&&(!imp||String(p.impedance_ohm)===imp)&&(!weather||p.weatherproof)&&(!line||p.has_100v_taps)&&(!term||(p.brand+" "+p.model).toLowerCase().includes(term)));
+  if(sortKey) out.sort((a,b)=>cmp(a,b));
+  render(out);
+}
+function value(o){switch(sortKey){case'dispersion_deg':return o.dispersion_deg.horizontal;case'dimensions_mm':return o.dimensions_mm.width;case'cutout_dimensions_mm':return o.cutout_dimensions_mm?.diameter;case'weatherproof':return o.weatherproof?1:0;case'price_eur':return parseFloat(o.price_eur)||0;default:return o[sortKey];}}
+function cmp(a,b){const A=value(a),B=value(b);if(A===B)return 0;if(A===undefined)return 1;if(B===undefined)return -1;return(A>B?1:-1)*(sortAsc?1:-1);}
+function render(list){const tb=document.getElementById('productBody');tb.innerHTML='';if(!list.length){tb.innerHTML=`<tr><td colspan="15" style="text-align:center">No matches</td></tr>`;return;}
+  list.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=`
+  <td>${p.brand}</td><td>${p.model}</td><td>${p.mount_type}</td><td>${p.rms_power_w}</td><td>${p.impedance_ohm}</td>
+  <td>${p.sensitivity_db_1w1m??'–'}</td><td>${p.max_spl_db??'–'}</td>
+  <td>${p.dispersion_deg.horizontal}/${p.dispersion_deg.vertical}</td>
+  <td>${p.driver_configuration}</td>
+  <td>${p.dimensions_mm.width}×${p.dimensions_mm.height}×${p.dimensions_mm.depth}</td>
+  <td>${p.cutout_dimensions_mm?.diameter??'–'}</td>
+  <td>${p.weatherproof?'Yes':'No'}</td>
+  <td>${p.has_100v_taps?(p.max_tap_w_100v+' W'):'–'}</td>
+  <td contenteditable class="edit-cell price">${p.price_eur}</td>
+  <td contenteditable class="edit-cell link">${p.buy_link}</td>`;
+  tr.querySelectorAll('.edit-cell').forEach((c,i)=>{c.onblur=()=>{i===13?p.price_eur=c.textContent.trim():p.buy_link=c.textContent.trim();};});
+  tb.appendChild(tr);});}
+// download
+ document.getElementById('downloadBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify(products,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='speakers_updated.json';a.click();URL.revokeObjectURL(url);
+ };
+</script>
+</body>
+</html>
