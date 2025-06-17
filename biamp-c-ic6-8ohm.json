@@ -1,0 +1,24 @@
+{
+  "id": "biamp-c-ic6-8ohm",
+  "brand": "Biamp",
+  "model": "C-IC6",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 60,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 88,
+  "max_spl_db": 106,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 130
+  },
+  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "dimensions_mm": {
+    "width": 238,
+    "height": 238,
+    "depth": 153
+  },
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "notes": ""
+}

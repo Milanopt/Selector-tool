@@ -1,0 +1,24 @@
+{
+  "id": "bose-dm5c-8ohm",
+  "brand": "Bose",
+  "model": "DM5C",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 60,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 105,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 130
+  },
+  "driver_configuration": "1\u00d7 5.25\" woofer",
+  "dimensions_mm": {
+    "width": 303,
+    "height": 303,
+    "depth": 205
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 50,
+  "notes": ""
+}

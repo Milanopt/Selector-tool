@@ -1,0 +1,24 @@
+{
+  "id": "audac-cira724-8ohm",
+  "brand": "AUDAC",
+  "model": "CIRA724",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 30,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 88,
+  "max_spl_db": 103,
+  "dispersion_deg": {
+    "horizontal": 150,
+    "vertical": 150
+  },
+  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "dimensions_mm": {
+    "width": 224,
+    "height": 224,
+    "depth": 78
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 24,
+  "notes": ""
+}

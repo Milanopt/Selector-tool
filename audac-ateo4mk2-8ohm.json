@@ -1,0 +1,24 @@
+{
+  "id": "audac-ateo4mk2-8ohm",
+  "brand": "AUDAC",
+  "model": "ATEO4MK2",
+  "mount_type": "surface mount",
+  "rms_power_w": 35,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 86,
+  "max_spl_db": 101,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 130
+  },
+  "driver_configuration": "1\u00d7 4\" woofer",
+  "dimensions_mm": {
+    "width": 136,
+    "height": 244,
+    "depth": 153
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 24,
+  "notes": ""
+}

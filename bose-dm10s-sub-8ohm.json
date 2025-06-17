@@ -1,0 +1,24 @@
+{
+  "id": "bose-dm10s-sub-8ohm",
+  "brand": "Bose",
+  "model": "DM10S-SUB",
+  "mount_type": "surface mount",
+  "rms_power_w": 300,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 90,
+  "max_spl_db": 115,
+  "dispersion_deg": {
+    "horizontal": 360,
+    "vertical": 360
+  },
+  "driver_configuration": "1\u00d7 10\" woofer",
+  "dimensions_mm": {
+    "width": 316,
+    "height": 502,
+    "depth": 346
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 150,
+  "notes": ""
+}

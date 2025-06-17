@@ -1,0 +1,24 @@
+{
+  "id": "bose-dm6c-8ohm",
+  "brand": "Bose",
+  "model": "DM6C",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 125,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 88,
+  "max_spl_db": 109,
+  "dispersion_deg": {
+    "horizontal": 120,
+    "vertical": 125
+  },
+  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "dimensions_mm": {
+    "width": 356,
+    "height": 356,
+    "depth": 239
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 80,
+  "notes": ""
+}

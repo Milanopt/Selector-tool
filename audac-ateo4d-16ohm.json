@@ -1,0 +1,24 @@
+{
+  "id": "audac-ateo4d-16ohm",
+  "brand": "AUDAC",
+  "model": "ATEO4D",
+  "mount_type": "surface mount",
+  "rms_power_w": 35,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 86,
+  "max_spl_db": 101,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 130
+  },
+  "driver_configuration": "1\u00d7 4\" woofer",
+  "dimensions_mm": {
+    "width": 136,
+    "height": 244,
+    "depth": 153
+  },
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "notes": ""
+}
