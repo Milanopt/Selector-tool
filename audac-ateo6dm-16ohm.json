@@ -1,0 +1,23 @@
+{
+  "id": "audac-ateo6dm-16ohm",
+  "brand": "AUDAC",
+  "model": "ATEO6DM",
+  "mount_type": "surface mount",
+  "rms_power_w": 60,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 106,
+  "dispersion_deg": {
+    "horizontal": 120,
+    "vertical": 120
+  },
+  "driver_configuration": "1\u00d7 6\" woofer",
+  "dimensions_mm": {
+    "width": 193.1,
+    "height": 347.5,
+    "depth": 215.2
+  },
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 50
+}
