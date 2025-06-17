@@ -9,19 +9,19 @@
   "max_spl_db": 105,
   "dispersion_deg": {
     "horizontal": 130,
-    "vertical": 130
+    "vertical": 135
   },
-  "driver_configuration": "1\u00d7 5.25\" woofer",
+  "driver_configuration": "5.25\"",
   "dimensions_mm": {
     "width": 303,
     "height": 303,
     "depth": 205
   },
+  "cutout_dimensions_mm": {
+    "diameter": 250
+  },
   "weatherproof": false,
   "has_100v_taps": true,
   "max_tap_w_100v": 50,
-  "notes": "",
-  "cutout_dimensions_mm": {
-    "diameter": 185
-  }
+  "notes": ""
 }

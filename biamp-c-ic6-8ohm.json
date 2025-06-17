@@ -5,23 +5,21 @@
   "mount_type": "ceiling mount",
   "rms_power_w": 60,
   "impedance_ohm": 8,
-  "sensitivity_db_1w1m": 88,
-  "max_spl_db": 106,
+  "sensitivity_db_1w1m": null,
+  "max_spl_db": null,
   "dispersion_deg": {
     "horizontal": 130,
     "vertical": 130
   },
-  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "driver_configuration": "6.5\"",
   "dimensions_mm": {
-    "width": 238,
-    "height": 238,
+    "width": null,
+    "height": null,
     "depth": 153
   },
+  "cutout_dimensions_mm": null,
   "weatherproof": false,
   "has_100v_taps": false,
   "max_tap_w_100v": null,
-  "notes": "",
-  "cutout_dimensions_mm": {
-    "diameter": 203
-  }
+  "notes": ""
 }

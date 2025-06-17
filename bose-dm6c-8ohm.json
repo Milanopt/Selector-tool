@@ -11,17 +11,17 @@
     "horizontal": 120,
     "vertical": 125
   },
-  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "driver_configuration": "6.5\"",
   "dimensions_mm": {
     "width": 356,
     "height": 356,
     "depth": 239
   },
+  "cutout_dimensions_mm": {
+    "diameter": 292
+  },
   "weatherproof": false,
   "has_100v_taps": true,
   "max_tap_w_100v": 80,
-  "notes": "",
-  "cutout_dimensions_mm": {
-    "diameter": 250
-  }
+  "notes": ""
 }
