@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Amplifier Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{font-family:system-ui,sans-serif;padding:1rem;background:#f9fafb;color:#111;line-height:1.4}
+    h1{font-size:1.8rem;margin-bottom:1rem}
+    .filters{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;align-items:center}
+    label{font-size:.85rem;font-weight:600;margin-right:.25rem}
+    select,input[type="number"],input[type="text"]{padding:.25rem .5rem;font-size:.85rem}
+    table{border-collapse:collapse;width:100%;background:#fff}
+    th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;font-size:.85rem}
+    th{background:#f1f5f9;cursor:pointer;user-select:none}
+    th.sort-asc::after{content:" ▲"}
+    th.sort-desc::after{content:" ▼"}
+    tbody tr:nth-child(odd){background:#f9fafb}
+    button{padding:.4rem .8rem;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:.85rem}
+    .btn-bar{margin:.5rem 0;display:flex;gap:.5rem}
+  </style>
+</head>
+<body>
+  <h1>Amplifier Selector</h1>
+  <div class="filters">
+    <div><label for="ampSearch">Search:</label><input id="ampSearch" type="text" placeholder="brand or model"></div>
+    <div><label for="ampExactCh">Channels:</label><input id="ampExactCh" type="number" min="1" placeholder="any" style="width:4rem"></div>
+    <div><label for="ampMin100V">Min W @100V:</label><input id="ampMin100V" type="number" min="0" placeholder="0" style="width:5rem"></div>
+    <div><label for="ampMinLow">Min W @4/8Ω:</label><input id="ampMinLow" type="number" min="0" placeholder="0" style="width:5rem"></div>
+    <div><label for="ampBridgable">Bridgable:</label><select id="ampBridgable"><option value="">Any</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+  </div>
+  <div class="btn-bar"><button id="downloadBtn">Download JSON</button></div>
+  <table>
+    <thead>
+      <tr>
+        <th data-key="Brand">Brand</th>
+        <th data-key="Model">Model</th>
+        <th data-key="Type">Type</th>
+        <th data-key="Number of Channels" data-num>Channels</th>
+        <th data-key="Power output per Channel in 100V">Power @100V</th>
+        <th data-key="Power output per Channel in 8 Ohm or 4 Ohm">Power @8Ω/4Ω</th>
+        <th data-key="Bridgable">Bridgable</th>
+        <th data-key="SNR">SNR</th>
+        <th data-key="Power consumption">Consumption</th>
+        <th data-key="Height (Units)">Height (U)</th>
+      </tr>
+    </thead>
+    <tbody id="ampBody"><tr><td colspan="10" style="text-align:center">Loading…</td></tr></tbody>
+  </table>
+<script>
+// Embedded amplifier data
+const amplifiers = [
+  { "Brand":"AUDAC","Model":"PMQ240","Type":"Quad-channel 100 V amp","Number of Channels":4,
+    "Power output per Channel in 100V":"240 W","Power output per Channel in 8 Ohm or 4 Ohm":"240 W @ 8 Ω",
+    "Bridgable":"No","SNR":"> 95 dB","Power consumption":null,"Height (Units)":"2 U" },
+  { "Brand":"AUDAC","Model":"PMQ480","Type":"Quad-channel 100 V amp","Number of Channels":4,
+    "Power output per Channel in 100V":"480 W","Power output per Channel in 8 Ohm or 4 Ohm":"480 W @ 8 Ω",
+    "Bridgable":"No","SNR":"> 95 dB","Power consumption":null,"Height (Units)":"2 U" },
+  { "Brand":"Biamp","Model":"AMP-450BP","Type":"PoE+ conferencing amp","Number of Channels":4,
+    "Power output per Channel in 100V":null,"Power output per Channel in 8 Ohm or 4 Ohm":"3 W cont / 50 W burst @ 4 Ω",
+    "Bridgable":"No","SNR":"> 90 dB","Power consumption":"30 W (PoE+)","Height (Units)":"0 U" },
+  { "Brand":"Biamp","Model":"AMP-450P","Type":"PoE+ conferencing amp","Number of Channels":4,
+    "Power output per Channel in 100V":null,"Power output per Channel in 8 Ohm or 4 Ohm":"3 W cont / 50 W burst @ 4 Ω",
+    "Bridgable":"No","SNR":"> 90 dB","Power consumption":"30 W (PoE+)","Height (Units)":"0 U" },
+  { "Brand":"Bose","Model":"FreeSpace IZA 2120-HZ","Type":"Zone amplifier","Number of Channels":2,
+    "Power output per Channel in 100V":"120 W","Power output per Channel in 8 Ohm or 4 Ohm":null,
+    "Bridgable":"No","SNR":"88 dB","Power consumption":"300 W (max)","Height (Units)":"1 U" },
+  { "Brand":"Bose","Model":"PowerSpace P2600A","Type":"Versatile power amp","Number of Channels":2,
+    "Power output per Channel in 100V":"600 W","Power output per Channel in 8 Ohm or 4 Ohm":"600 W @ 4-8 Ω",
+    "Bridgable":"Yes","SNR":"≥ 100 dB","Power consumption":"570 W (max)","Height (Units)":"1 U" },
+  { "Brand":"Crown","Model":"XLi 1500","Type":"Stereo power amp","Number of Channels":2,
+    "Power output per Channel in 100V":null,"Power output per Channel in 8 Ohm or 4 Ohm":"330 W @ 8 Ω / 450 W @ 4 Ω",
+    "Bridgable":"Yes","SNR":"> 100 dB","Power consumption":null,"Height (Units)":"2 U" }
+];
+
+function parseMaxW(str){if(!str)return 0;const m=str.match(/\d+(\.\d+)?/g);return m?Math.max(...m.map(Number)):0;}
+function preprocess(a){a._p100=parseMaxW(a["Power output per Channel in 100V"]);a._plow=parseMaxW(a["Power output per Channel in 8 Ohm or 4 Ohm"]);return a;}
+const amps = amplifiers.map(preprocess);
+
+let sortKey=null, asc=true;
+function attachFilters(){["ampSearch","ampExactCh","ampMin100V","ampMinLow","ampBridgable"].forEach(id=>document.getElementById(id).addEventListener("input",apply));}
+function attachSort(){document.querySelectorAll("th").forEach(th=>{th.onclick=()=>{const k=th.dataset.key;asc = sortKey===k?!asc:true; sortKey=k; document.querySelectorAll("th").forEach(h=>h.classList.remove("sort-asc","sort-desc")); th.classList.add(asc?"sort-asc":"sort-desc"); apply();};});}
+function val(a){return a[sortKey];}
+function cmp(a,b){const A=val(a),B=val(b);if(A===B)return 0;if(A===undefined)return 1;if(B===undefined)return -1;return(A>B?1:-1)*(asc?1:-1);}
+function render(list){const tb=document.getElementById("ampBody");tb.innerHTML="";if(!list.length){tb.innerHTML='<tr><td colspan="10" style="text-align:center">No matches</td></tr>';return;}list.forEach(a=>{tb.insertAdjacentHTML("beforeend",`<tr><td>${a.Brand}</td><td>${a.Model}</td><td>${a.Type}</td><td>${a["Number of Channels"]}</td><td>${a["Power output per Channel in 100V"]||"–"}</td><td>${a["Power output per Channel in 8 Ohm or 4 Ohm"]||"–"}</td><td>${a.Bridgable}</td><td>${a.SNR}</td><td>${a["Power consumption"]||"–"}</td><td>${a["Height (Units)"]}</td></tr>`);});}
+function apply(){const g=id=>document.getElementById(id);const term=g("ampSearch").value.toLowerCase();const chStr=g("ampExactCh").value;const exactCh=chStr?parseInt(chStr):null;const min100=+g("ampMin100V").value||0;const minLow=+g("ampMinLow").value||0;const brid=g("ampBridgable").value;let out=amps.filter(a=>(!term||(a.Brand+" "+a.Model).toLowerCase().includes(term))&&(!exactCh||a["Number of Channels"]===exactCh)&&(a._p100>=min100)&&(a._plow>=minLow)&&(!brid||a.Bridgable===brid));if(sortKey)out.sort(cmp);render(out);}
+document.getElementById("downloadBtn").onclick=()=>{const blob=new Blob([JSON.stringify(amps,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="amplifiers.json";a.click();};
+attachFilters();attachSort();apply();
+</script>
+</body>
+</html>
