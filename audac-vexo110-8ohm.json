@@ -1,0 +1,23 @@
+{
+  "id": "audac-vexo110-8ohm",
+  "brand": "AUDAC",
+  "model": "VEXO110",
+  "mount_type": "surface mount",
+  "rms_power_w": 300,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 96,
+  "max_spl_db": 121,
+  "dispersion_deg": {
+    "horizontal": 90,
+    "vertical": 70
+  },
+  "driver_configuration": "1\u00d7 10\" woofer",
+  "dimensions_mm": {
+    "width": 329,
+    "height": 540,
+    "depth": 345
+  },
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null
+}
