@@ -1,0 +1,29 @@
+{
+  "brand": "AUDAC",
+  "model": "CALI424",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 30,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 84,
+  "max_spl_db": 101,
+  "dispersion_deg": {
+    "horizontal": 155,
+    "vertical": null
+  },
+  "driver_configuration": "2-way coaxial",
+  "dimensions_mm": {
+    "width": 192,
+    "height": 110,
+    "depth": 110
+  },
+  "cutout_dimensions_mm": {
+    "diameter": 170
+  },
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 24,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}

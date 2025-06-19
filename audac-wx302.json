@@ -1,0 +1,27 @@
+{
+  "brand": "AUDAC",
+  "model": "WX302",
+  "mount_type": "surface mount",
+  "rms_power_w": 30,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 85,
+  "max_spl_db": 100,
+  "dispersion_deg": {
+    "horizontal": 100,
+    "vertical": 100
+  },
+  "driver_configuration": "2-way",
+  "dimensions_mm": {
+    "width": 188,
+    "height": 129,
+    "depth": 165
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 20,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}
