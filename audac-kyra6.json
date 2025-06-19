@@ -1,0 +1,27 @@
+{
+  "brand": "AUDAC",
+  "model": "KYRA6",
+  "mount_type": "surface mount",
+  "rms_power_w": 60,
+  "impedance_ohm": 12,
+  "sensitivity_db_1w1m": 90,
+  "max_spl_db": 106,
+  "dispersion_deg": {
+    "horizontal": 174,
+    "vertical": 28
+  },
+  "driver_configuration": "6 x 2\u201d aluminum cone full-range drivers",
+  "dimensions_mm": {
+    "width": 70,
+    "height": 546,
+    "depth": 101
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 20,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}

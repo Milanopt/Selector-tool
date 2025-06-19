@@ -1,0 +1,27 @@
+{
+  "brand": "AUDAC",
+  "model": "WX802_O",
+  "mount_type": "surface mount",
+  "rms_power_w": 70,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 108,
+  "dispersion_deg": {
+    "horizontal": 110,
+    "vertical": 110
+  },
+  "driver_configuration": "2-way",
+  "dimensions_mm": {
+    "width": 360,
+    "height": 270,
+    "depth": 215
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 60,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}

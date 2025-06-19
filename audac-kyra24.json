@@ -1,0 +1,27 @@
+{
+  "brand": "AUDAC",
+  "model": "KYRA24",
+  "mount_type": "surface mount",
+  "rms_power_w": 240,
+  "impedance_ohm": 4,
+  "sensitivity_db_1w1m": 92,
+  "max_spl_db": 113,
+  "dispersion_deg": {
+    "horizontal": 174,
+    "vertical": 7
+  },
+  "driver_configuration": "24 x 2\" aluminum cone full-range drivers",
+  "dimensions_mm": {
+    "width": 70,
+    "height": 2006,
+    "depth": 101
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}
