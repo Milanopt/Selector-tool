@@ -1,0 +1,27 @@
+{
+  "brand": "QSC",
+  "model": "AD-S802T",
+  "mount_type": "surface mount",
+  "rms_power_w": 120,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 108,
+  "dispersion_deg": {
+    "horizontal": 160,
+    "vertical": 20
+  },
+  "driver_configuration": "8 x 2.75\" weather treated paper cone woofer",
+  "dimensions_mm": {
+    "width": 595,
+    "height": 131,
+    "depth": 126
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 60,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0",
+  "datasheet_url": ""
+}
