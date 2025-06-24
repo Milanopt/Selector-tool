@@ -1,0 +1,29 @@
+{
+  "id": "bose-fs4ce-8ohm",
+  "brand": "Bose",
+  "model": "FreeSpace FS4CE",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 50,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 88,
+  "max_spl_db": 111,
+  "dispersion_deg": {
+    "horizontal": 145,
+    "vertical": 115
+  },
+  "driver_configuration": "1\u00d7 4.5\" driver",
+  "dimensions_mm": {
+    "width": 272,
+    "height": 172,
+    "depth": 172
+  },
+  "cutout_dimensions_mm": {
+    "diameter": 249
+  },
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 40,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "bose-fs2se-16ohm",
+  "brand": "Bose",
+  "model": "FreeSpace FS2SE",
+  "mount_type": "surface mount",
+  "rms_power_w": 20,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 106,
+  "dispersion_deg": {
+    "horizontal": 145,
+    "vertical": 140
+  },
+  "driver_configuration": "1\u00d7 2.25\" driver",
+  "dimensions_mm": {
+    "width": 113,
+    "height": 182,
+    "depth": 114
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 16,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

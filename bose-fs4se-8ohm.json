@@ -1,0 +1,27 @@
+{
+  "id": "bose-fs4se-8ohm",
+  "brand": "Bose",
+  "model": "FreeSpace FS4SE",
+  "mount_type": "surface mount",
+  "rms_power_w": 50,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 112,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 125
+  },
+  "driver_configuration": "1\u00d7 4.5\" driver",
+  "dimensions_mm": {
+    "width": 171,
+    "height": 254,
+    "depth": 174
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 40,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

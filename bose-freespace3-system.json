@@ -1,0 +1,27 @@
+{
+  "id": "bose-freespace3-system",
+  "brand": "Bose",
+  "model": "FreeSpace 3",
+  "mount_type": "surface mount",
+  "rms_power_w": 100,
+  "impedance_ohm": 6,
+  "sensitivity_db_1w1m": 84,
+  "max_spl_db": 102,
+  "dispersion_deg": {
+    "horizontal": 170,
+    "vertical": 170
+  },
+  "driver_configuration": "1\u00d7 5.25\" woofer",
+  "dimensions_mm": {
+    "width": 222,
+    "height": 356,
+    "depth": 345
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 200,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}
