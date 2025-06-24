@@ -1,0 +1,27 @@
+{
+  "id": "bose-showmatch-sms118-4ohm",
+  "brand": "Bose",
+  "model": "ShowMatch SMS118",
+  "mount_type": "surface mount",
+  "rms_power_w": 1250,
+  "impedance_ohm": 4,
+  "sensitivity_db_1w1m": 92,
+  "max_spl_db": 135,
+  "dispersion_deg": {
+    "horizontal": 360,
+    "vertical": 360
+  },
+  "driver_configuration": "1\u00d7 18\" woofer",
+  "dimensions_mm": {
+    "width": 765,
+    "height": 540,
+    "depth": 775
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

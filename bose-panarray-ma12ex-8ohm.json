@@ -1,0 +1,27 @@
+{
+  "id": "bose-panarray-ma12ex-8ohm",
+  "brand": "Bose",
+  "model": "Panaray MA12EX",
+  "mount_type": "surface mount",
+  "rms_power_w": 150,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 118,
+  "dispersion_deg": {
+    "horizontal": 160,
+    "vertical": 20
+  },
+  "driver_configuration": "12\u00d7 2.25\" drivers",
+  "dimensions_mm": {
+    "width": 104,
+    "height": 985,
+    "depth": 139
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

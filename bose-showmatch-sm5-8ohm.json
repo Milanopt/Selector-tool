@@ -1,0 +1,27 @@
+{
+  "id": "bose-showmatch-sm5-8ohm",
+  "brand": "Bose",
+  "model": "ShowMatch SM5",
+  "mount_type": "surface mount",
+  "rms_power_w": 450,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 94,
+  "max_spl_db": 133,
+  "dispersion_deg": {
+    "horizontal": 70,
+    "vertical": 5
+  },
+  "driver_configuration": "2\u00d7 8\" woofers + 4\u00d7 HF drivers",
+  "dimensions_mm": {
+    "width": 793,
+    "height": 270,
+    "depth": 467
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}
