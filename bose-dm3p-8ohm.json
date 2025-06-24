@@ -1,0 +1,27 @@
+{
+  "id": "bose-dm3p-8ohm",
+  "brand": "Bose",
+  "model": "DM3P",
+  "mount_type": "pendant",
+  "rms_power_w": 30,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 84,
+  "max_spl_db": 105,
+  "dispersion_deg": {
+    "horizontal": 130,
+    "vertical": 130
+  },
+  "driver_configuration": "1\u00d7 3.25\" woofer",
+  "dimensions_mm": {
+    "width": 207,
+    "height": 248,
+    "depth": 248
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 25,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

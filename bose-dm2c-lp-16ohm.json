@@ -1,0 +1,29 @@
+{
+  "id": "bose-dm2c-lp-16ohm",
+  "brand": "Bose",
+  "model": "DM2C\u2011LP",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 20,
+  "impedance_ohm": 16,
+  "sensitivity_db_1w1m": 84,
+  "max_spl_db": 103,
+  "dispersion_deg": {
+    "horizontal": 150,
+    "vertical": 150
+  },
+  "driver_configuration": "1\u00d7 2.25\" full\u2011range",
+  "dimensions_mm": {
+    "width": 198,
+    "height": 110,
+    "depth": 110
+  },
+  "cutout_dimensions_mm": {
+    "diameter": 165
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 9,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

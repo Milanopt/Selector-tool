@@ -1,0 +1,27 @@
+{
+  "id": "bose-dm6pe-8ohm",
+  "brand": "Bose",
+  "model": "DM6PE",
+  "mount_type": "pendant",
+  "rms_power_w": 125,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 116,
+  "dispersion_deg": {
+    "horizontal": 115,
+    "vertical": 115
+  },
+  "driver_configuration": "1\u00d7 6.5\" woofer",
+  "dimensions_mm": {
+    "width": 308,
+    "height": 375,
+    "depth": 375
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 80,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

@@ -6,15 +6,15 @@
   "rms_power_w": 125,
   "impedance_ohm": 8,
   "sensitivity_db_1w1m": 88,
-  "max_spl_db": 109,
+  "max_spl_db": 115,
   "dispersion_deg": {
     "horizontal": 120,
     "vertical": 125
   },
-  "driver_configuration": "6.5\"",
+  "driver_configuration": "1\u00d7 6.5\" woofer",
   "dimensions_mm": {
     "width": 356,
-    "height": 356,
+    "height": 239,
     "depth": 239
   },
   "cutout_dimensions_mm": {
@@ -23,5 +23,7 @@
   "weatherproof": false,
   "has_100v_taps": true,
   "max_tap_w_100v": 80,
-  "notes": ""
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

@@ -1,24 +1,24 @@
 {
-  "id": "bose-dm5se-8ohm",
+  "id": "bose-dm5p-8ohm",
   "brand": "Bose",
-  "model": "DM5SE",
-  "mount_type": "surface mount",
+  "model": "DM5P",
+  "mount_type": "pendant",
   "rms_power_w": 60,
   "impedance_ohm": 8,
-  "sensitivity_db_1w1m": 89,
-  "max_spl_db": 113,
+  "sensitivity_db_1w1m": 87,
+  "max_spl_db": 111,
   "dispersion_deg": {
-    "horizontal": 135,
-    "vertical": 130
+    "horizontal": 120,
+    "vertical": 120
   },
   "driver_configuration": "1\u00d7 5.25\" woofer",
   "dimensions_mm": {
-    "width": 192,
-    "height": 286,
-    "depth": 197
+    "width": 259,
+    "height": 300,
+    "depth": 300
   },
   "cutout_dimensions_mm": null,
-  "weatherproof": true,
+  "weatherproof": false,
   "has_100v_taps": true,
   "max_tap_w_100v": 50,
   "price_eur": "",
