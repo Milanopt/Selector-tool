@@ -1,4 +1,27 @@
 {
   "id": "bose-amu206-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "AMU206",
+  "mount_type": "surface mount",
+  "rms_power_w": 300,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 91,
+  "max_spl_db": 124,
+  "dispersion_deg": {
+    "horizontal": 120,
+    "vertical": 60
+  },
+  "driver_configuration": "2\u00d7 6.5\" woofers",
+  "dimensions_mm": {
+    "width": 191,
+    "height": 553,
+    "depth": 268
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 80,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

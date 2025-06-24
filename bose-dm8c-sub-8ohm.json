@@ -1,0 +1,29 @@
+{
+  "id": "bose-dm8c-sub-8ohm",
+  "brand": "Bose",
+  "model": "DM8C\u2011SUB",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 180,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 89,
+  "max_spl_db": 112,
+  "dispersion_deg": {
+    "horizontal": 360,
+    "vertical": 360
+  },
+  "driver_configuration": "1\u00d7 8\" woofer",
+  "dimensions_mm": {
+    "width": 409,
+    "height": 409,
+    "depth": 255
+  },
+  "cutout_dimensions_mm": {
+    "diameter": 349
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 150,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

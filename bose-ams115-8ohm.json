@@ -1,4 +1,27 @@
 {
   "id": "bose-ams115-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "AMS115",
+  "mount_type": "surface mount",
+  "rms_power_w": 500,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 90,
+  "max_spl_db": 130,
+  "dispersion_deg": {
+    "horizontal": 360,
+    "vertical": 360
+  },
+  "driver_configuration": "1\u00d7 15\" woofer",
+  "dimensions_mm": {
+    "width": 470,
+    "height": 470,
+    "depth": 508
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

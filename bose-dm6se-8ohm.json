@@ -8,17 +8,20 @@
   "sensitivity_db_1w1m": 90,
   "max_spl_db": 111,
   "dispersion_deg": {
-    "horizontal": 125,
+    "horizontal": 115,
     "vertical": 115
   },
   "driver_configuration": "1\u00d7 6.5\" woofer",
   "dimensions_mm": {
     "width": 222,
     "height": 340,
-    "depth": 245
+    "depth": 229
   },
+  "cutout_dimensions_mm": null,
   "weatherproof": true,
   "has_100v_taps": true,
   "max_tap_w_100v": 80,
-  "notes": ""
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

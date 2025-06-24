@@ -1,4 +1,27 @@
 {
   "id": "bose-arenamatch-am10-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "ArenaMatch AM10/80",
+  "mount_type": "surface mount",
+  "rms_power_w": 750,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 100,
+  "max_spl_db": 135,
+  "dispersion_deg": {
+    "horizontal": 80,
+    "vertical": 10
+  },
+  "driver_configuration": "1\u00d7 14\" woofer",
+  "dimensions_mm": {
+    "width": 783,
+    "height": 409,
+    "depth": 420
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 400,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

@@ -1,21 +1,21 @@
 {
-  "id": "bose-dm10s-sub-8ohm",
+  "id": "bose-dm10p-sub-8ohm",
   "brand": "Bose",
-  "model": "DM10S\u2011SUB",
-  "mount_type": "surface mount",
+  "model": "DM10P\u2011SUB",
+  "mount_type": "pendant",
   "rms_power_w": 300,
   "impedance_ohm": 8,
-  "sensitivity_db_1w1m": 90,
-  "max_spl_db": 115,
+  "sensitivity_db_1w1m": 85,
+  "max_spl_db": 110,
   "dispersion_deg": {
     "horizontal": 360,
     "vertical": 360
   },
   "driver_configuration": "1\u00d7 10\" woofer",
   "dimensions_mm": {
-    "width": 316,
-    "height": 502,
-    "depth": 323
+    "width": 400,
+    "height": 400,
+    "depth": 383
   },
   "cutout_dimensions_mm": null,
   "weatherproof": false,

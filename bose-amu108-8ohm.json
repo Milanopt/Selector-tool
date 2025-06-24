@@ -1,4 +1,27 @@
 {
   "id": "bose-amu108-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "AMU108",
+  "mount_type": "surface mount",
+  "rms_power_w": 250,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 91,
+  "max_spl_db": 121,
+  "dispersion_deg": {
+    "horizontal": 90,
+    "vertical": 60
+  },
+  "driver_configuration": "1\u00d7 8\" woofer",
+  "dimensions_mm": {
+    "width": 235,
+    "height": 470,
+    "depth": 279
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 80,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

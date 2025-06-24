@@ -1,0 +1,29 @@
+{
+  "id": "bose-edgemax-em90-lp-8ohm",
+  "brand": "Bose",
+  "model": "EdgeMax EM90\u2011LP",
+  "mount_type": "ceiling mount",
+  "rms_power_w": 40,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 95,
+  "max_spl_db": 111,
+  "dispersion_deg": {
+    "horizontal": 90,
+    "vertical": 80
+  },
+  "driver_configuration": "1\u00d7 5.25\" woofer",
+  "dimensions_mm": {
+    "width": 339,
+    "height": 339,
+    "depth": 100
+  },
+  "cutout_dimensions_mm": {
+    "diameter": 345
+  },
+  "weatherproof": false,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 32,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
+}

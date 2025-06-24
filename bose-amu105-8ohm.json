@@ -1,4 +1,27 @@
 {
   "id": "bose-amu105-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "AMU105",
+  "mount_type": "surface mount",
+  "rms_power_w": 150,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 90,
+  "max_spl_db": 118,
+  "dispersion_deg": {
+    "horizontal": 100,
+    "vertical": 100
+  },
+  "driver_configuration": "1\u00d7 5.25\" woofer",
+  "dimensions_mm": {
+    "width": 152,
+    "height": 305,
+    "depth": 229
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": true,
+  "has_100v_taps": true,
+  "max_tap_w_100v": 80,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }

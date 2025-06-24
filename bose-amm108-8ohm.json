@@ -1,4 +1,27 @@
 {
   "id": "bose-amm108-8ohm",
-  "brand": "Bose"
+  "brand": "Bose",
+  "model": "AMM108",
+  "mount_type": "surface mount",
+  "rms_power_w": 150,
+  "impedance_ohm": 8,
+  "sensitivity_db_1w1m": 94,
+  "max_spl_db": 128,
+  "dispersion_deg": {
+    "horizontal": 110,
+    "vertical": 60
+  },
+  "driver_configuration": "1\u00d7 8\" woofer",
+  "dimensions_mm": {
+    "width": 318,
+    "height": 318,
+    "depth": 268
+  },
+  "cutout_dimensions_mm": null,
+  "weatherproof": false,
+  "has_100v_taps": false,
+  "max_tap_w_100v": null,
+  "price_eur": "",
+  "buy_link": "",
+  "schema_version": "1.0"
 }
